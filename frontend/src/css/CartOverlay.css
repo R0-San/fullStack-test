@@ -1,0 +1,183 @@
+.cart-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(1px);
+  z-index: 1;
+  transform: translateX(100%);
+  transition: 0.5s;
+}
+
+.cart-overlay.open {
+  transform: translateX(0);
+  transition: 0.5s;
+}
+
+.overlay-content {
+  background: white;
+  right: 100px;
+  padding: 20px;
+  max-width: 1000px;
+  margin: 50px auto;
+  padding-top: 100px;
+  position: absolute;
+  height: 80%;
+  width: 800px;
+  overflow-y: auto;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+  justify-content: flex-start;
+  position: relative;
+}
+
+.cart-item-details {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 20px;
+}
+
+.cart-item-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.cart-item-price {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.attribute {
+  margin-top: 10px;
+}
+
+.attribute-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.attribute-btn {
+  min-width: 40px;
+  padding: 5px 10px;
+  font-size: 0.9rem;
+  border: 2px solid #000;
+  background-color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.attribute-btn:hover {
+  background-color: #ddd;
+}
+
+.attribute-btn.selected {
+  background-color: black;
+  color: white;
+}
+
+.cart-item-quantity-controls {
+  position: absolute;
+  top: 50%;
+  right: 180px;  
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  z-index: 2;
+}
+
+.cart-item-plus-btn {
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  background: white;
+  border: 2px solid black;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cart-item-minus-btn {
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  background: white;
+  border: 2px solid black;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cart-item-plus-btn:hover,
+.cart-item-minus-btn:hover {
+  background: black;
+  color: white;
+}
+
+.cart-item-quantity {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.cart-item-img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  margin-top: 40px;
+  margin-bottom: 40px; 
+}
+
+.place-order-btn {
+  width: 100%;
+  padding: 15px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  background-color: #6bac6a;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 20px;
+}
+
+.place-order-btn:hover {
+  background-color: #218838;
+}
+
+.place-order-btn:active {
+  background-color: #444;
+}
+
+.place-order-btn:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+.cart-total {
+  background-color: #f8f9fa;
+  padding: 15px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 20px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
