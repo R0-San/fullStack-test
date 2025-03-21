@@ -3,12 +3,8 @@ import { useCart } from "./CartContext";
 import PlaceOrderButton from './PlaceOrder.jsx';
 import "../css/CartOverlay.css";
 
-function CartOverlay({ isVisible }) {
-  const { cartItems, updateQuantity, updateCartItemAttributes } = useCart();
-
-  const handleAttributeChange = (itemKey, attributeId, value) => {
-    updateCartItemAttributes(itemKey, { [attributeId]: value });
-  };
+function CartOverlay({ isVisible, onClose}) {
+  const { cartItems, updateQuantity} = useCart();
 
   const cartTotal = cartItems.reduce((acc, item) => {
     if (!item.prices || !item.prices[0] || !item.prices[0].amount) {
@@ -18,8 +14,14 @@ function CartOverlay({ isVisible }) {
     return acc + item.quantity * item.prices[0].amount;
   }, 0);
 
+  const handleOverlayClick = (e) => {
+    if (!e.target.closest(".overlay-content") && !e.target.closest(".navigation-bar")) {
+      onClose();
+    }
+  };
+
   return (
-    <div className={`cart-overlay ${isVisible ? "open" : ""}`}>
+    <div className={`cart-overlay ${isVisible ? "open" : ""}`} onClick={handleOverlayClick}>
       <div className="overlay-content">
         <h2>My Bag: {cartItems.reduce((acc, item) => acc + item.quantity, 0)}</h2>
         {cartItems.length > 0 ? (
@@ -31,7 +33,6 @@ function CartOverlay({ isVisible }) {
                   <p className="cart-item-price">
                     ${item.prices?.[0]?.amount.toFixed(2) || "N/A"}
                   </p>
-
                   {item.attributes?.map((attribute) => (
                     <div key={attribute.id} className="attribute">
                       <p>{attribute.name}:</p>
@@ -54,12 +55,8 @@ function CartOverlay({ isVisible }) {
                                 }
                                 : {}
                             }
-                            onClick={() =>
-                              handleAttributeChange(item.key, attribute.id, itemOption.value)
-                            } 
-                            data-testid={`cart-item-attribute-${attribute.name.toLowerCase().replace(/\s+/g, "-")}-${attribute.name.toLowerCase().replace(/\s+/g, "-")}-selected`}
-                          >
-                            {attribute.name.toLowerCase() !== "color" && itemOption.displayValue}
+                            >
+                              {attribute.name.toLowerCase() !== "color" && itemOption.displayValue}
                           </button>
                         ))}
                       </div>

@@ -24,7 +24,6 @@ function PlaceOrderButton() {
       });
   
       console.log("Response from backend:", response);
-      alert("Order placed successfully!");
       clearCart();
     } catch (err) {
       console.error("Error placing order:", err);

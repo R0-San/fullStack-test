@@ -7,21 +7,4 @@
     .main {
       padding: 1rem 0;
     }
-  }
-  
-  .product-grid {
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    grid-column-gap: 12rem;
-    grid-row-gap: 15rem;
-    padding: 8rem;
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  h1{
-    font-weight: 100;
-    margin-top: 4rem;
-    margin-left: 8rem;
-    font-size: 3rem;
-  }
+  }  

@@ -18,6 +18,11 @@ export const CartProvider = ({ children }) => {
     }
   }, []);
 
+  const handleAddToCart = (e) => {
+    e.stopPropagation();
+    addToCart(product, selectedAttributes);
+  };
+
   const generateItemKey = (id, selectedAttributes) => {
     return `${id}-${Object.entries(selectedAttributes)
       .map(([key, value]) => `${key}-${value}`)
@@ -26,26 +31,26 @@ export const CartProvider = ({ children }) => {
 
   const addToCart = (product, selectedAttributes = {}) => {
     setCartItems((prevCart) => {
-      const itemKey = generateItemKey(product.id, selectedAttributes);
-      const existingItem = prevCart.find((item) => item.key === itemKey);
+        const itemKey = generateItemKey(product.id, selectedAttributes);
+        const existingItem = prevCart.find((item) => item.key === itemKey);
 
-      let updatedCart;
+        let updatedCart;
 
-      if (existingItem) {
-        updatedCart = prevCart.map((item) =>
-          item.key === itemKey ? { ...item, quantity: item.quantity + 1 } : item
-        );
-      } else {
-        updatedCart = [
-          ...prevCart,
-          { ...product, selectedAttributes, key: itemKey, quantity: 1 },
-        ];
-      }
+        if (existingItem) {
+            updatedCart = prevCart.map((item) =>
+                item.key === itemKey ? { ...item, quantity: item.quantity + 1 } : item
+            );
+        } else {
+            updatedCart = [
+                ...prevCart,
+                { ...product, selectedAttributes, key: itemKey, quantity: 1 },
+            ];
+        }
 
-      localStorage.setItem("cart", JSON.stringify(updatedCart));
-      return updatedCart;
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
+        return updatedCart;
     });
-  };
+};
 
   const removeFromCart = (itemKey) => {
     const updatedCart = cartItems.filter((item) => item.key !== itemKey);
@@ -80,14 +85,14 @@ export const CartProvider = ({ children }) => {
             selectedAttributes: {
               ...item.selectedAttributes,
               ...Object.fromEntries(
-                Object.entries(updatedAttributes).map(([key, value]) => [parseInt(key, 10), value]) 
+                Object.entries(updatedAttributes).map(([key, value]) => [parseInt(key, 10), value])
               ),
             },
           };
         }
         return item;
       });
-  
+
       localStorage.setItem("cart", JSON.stringify(updatedCart));
       return updatedCart;
     });
@@ -99,7 +104,7 @@ export const CartProvider = ({ children }) => {
   };
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateQuantity, updateCartItemAttributes, clearCart}}>
+    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateQuantity, updateCartItemAttributes, clearCart }}>
       {children}
     </CartContext.Provider>
   );

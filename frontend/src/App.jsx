@@ -3,6 +3,7 @@ import { ApolloProvider, ApolloClient, InMemoryCache, HttpLink, from } from "@ap
 import { onError } from "@apollo/client/link/error";
 import { Routes, Route } from 'react-router-dom';
 import { CartProvider } from './components/CartContext';
+import CartOverlay from './components/CartOverlay.jsx';
 import NavigationMenu from "./components/navigation.jsx";
 import ProductDetailsPage from './pages/ProductDetailsPage';
 import GetProducts from './components/GetProducts.jsx';
@@ -51,6 +52,9 @@ function App() {
             <Route path="/products/:productId" element={<ProductDetailsPage />} />
           </Routes>
         </main>
+        {isCartOverlayVisible && (
+          <CartOverlay isVisible={isCartOverlayVisible} onClose={() => setCartOverlayVisible(false)} />
+        )}
       </CartProvider >
     </ApolloProvider>
 

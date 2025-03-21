@@ -24,6 +24,7 @@ function NavigationMenu({ toggleCartOverlay, isCartOverlayVisible }) {
                 to="/"
                 className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
                 data-testid={ ({ isActive }) => isActive ? 'active-category-link' : 'category-link' }
+                onClick={() => isCartOverlayVisible && toggleCartOverlay()}
               >
                 All
               </NavLink>
@@ -33,6 +34,7 @@ function NavigationMenu({ toggleCartOverlay, isCartOverlayVisible }) {
                 to="/Clothes"
                 className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
                 data-testid={ ({ isActive }) => isActive ? 'active-category-link' : 'category-link' }
+                onClick={() => isCartOverlayVisible && toggleCartOverlay()}
               >
                 Clothes
               </NavLink>
@@ -42,15 +44,18 @@ function NavigationMenu({ toggleCartOverlay, isCartOverlayVisible }) {
                 to="/Tech"
                 className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
                 data-testid={ ({ isActive }) => isActive ? 'active-category-link' : 'category-link' }
+                onClick={() => isCartOverlayVisible && toggleCartOverlay()}
               >
                 Technologies
               </NavLink>
             </li>
+            <div className="logo-container">
             <li className="logo">
-              <Link to="/">
+              <Link to="/" onClick={() => isCartOverlayVisible && toggleCartOverlay()}>
                 <img src="/shop.png" alt="Shop Logo" />
               </Link>
             </li>
+            </div>
             <li className="cart-container">
               <button
                 data-testid="cart-btn"

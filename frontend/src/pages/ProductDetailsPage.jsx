@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { useCart } from "../components/CartContext";
 import { Load_Products } from '../graphql/Queries';
+import parse from 'html-react-parser';
 import "../css/ProductDetails.css";
 
 function ProductDetailsPage() {
@@ -45,6 +46,17 @@ function ProductDetailsPage() {
             ...prev,
             [attributeId]: value,
         }));
+    };
+
+    const renderDescription = (description) => {
+        if (!description) return "";
+
+        let formattedDescription = description.replace(/\\n/g, "<br/>");
+
+        if (formattedDescription.includes("<li>")) {
+            formattedDescription = `<ul>${formattedDescription}</ul>`;
+        }
+        return parse(formattedDescription);
     };
 
     return (
@@ -110,7 +122,7 @@ function ProductDetailsPage() {
                 </button>
 
                 <div className="product-description">
-                    <div>{product.description}</div>
+                    <div>{renderDescription(product.description)}</div>
                 </div>
             </div>
         </div>
