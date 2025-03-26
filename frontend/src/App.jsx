@@ -23,7 +23,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   }
 });
 
-const httpLink = new HttpLink({ uri: "http://testhost/GraphQL.php" });
+const httpLink = new HttpLink({ uri: "http://localhost/GraphQL.php" });
 
 const link = from([errorLink, httpLink]);
 
