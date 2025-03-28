@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "../css/ProductCard.css";
 import { useCart } from "./CartContext";
@@ -6,8 +5,6 @@ import { useCart } from "./CartContext";
 function ProductCard({ product }) {
     const { addToCart } = useCart();
     const navigate = useNavigate();
-    const [selectedAttributes, setSelectedAttributes] = useState({});
-
 
     const generateRandomAttributes = () => {
         const randomAttributes = {};
@@ -17,7 +14,6 @@ function ProductCard({ product }) {
         });
         return randomAttributes;
     };
-
 
     const handleAddToCart = (e) => {
         e.stopPropagation(); 
@@ -42,33 +38,6 @@ function ProductCard({ product }) {
                 <p className="product-info-price">
                     {product.prices?.[0]?.amount || 'N/A'} {product.prices?.[0]?.currency?.symbol || 'USD'}
                 </p>
-                {product.attributes.map((attribute) => (
-                    <div key={attribute.id} className="attribute">
-                        <label>{attribute.name}:</label>
-                        <div className="attribute-buttons">
-                            {attribute.items.map((item) => (
-                                <button
-                                    key={item.id}
-                                    className={`attribute-btn ${selectedAttributes[attribute.id] === item.value ? 'selected' : ''}`}
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        setSelectedAttributes((prev) => ({
-                                            ...prev,
-                                            [attribute.id]: item.value,
-                                        }));
-                                    }}
-                                    style={
-                                        attribute.name.toLowerCase() === "color"
-                                            ? { backgroundColor: item.value, border: selectedAttributes[attribute.id] === item.value ? "3px solid green" : "1px solid #000" }
-                                            : {}
-                                    }
-                                >
-                                    {attribute.name.toLowerCase() !== "color" && item.displayValue}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-                ))}
             </div>
             <button className="add-btn" onClick={handleAddToCart} disabled={!product.inStock}>
                 <img className="btn-img" src="../public/cart.png" alt="Add to Cart" />
