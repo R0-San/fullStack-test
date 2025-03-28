@@ -4,7 +4,7 @@ use App\Models\PlaceOrder;
 
 class OrderResolver extends PlaceOrder
 {
-    public function createOrder1($items)
+    public function newOrder($items)
     {
         return $this->createOrder($items);
     }

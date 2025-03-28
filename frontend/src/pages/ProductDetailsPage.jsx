@@ -13,12 +13,6 @@ function ProductDetailsPage() {
     const [selectedAttributes, setSelectedAttributes] = useState({});
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-    useEffect(() => {
-        if (data) {
-            console.log("Fetched products:", data.products);
-        }
-    }, [data]);
-
     if (loading) return <div className="loading">Loading...</div>;
     if (error) return <div className="error">Error: {error.message}</div>;
 

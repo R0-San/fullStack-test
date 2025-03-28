@@ -331,7 +331,7 @@ class GraphQL
                             ],
                         ],
                         'resolve' => function ($root, $args) use ($orderResolver) {
-                            return $orderResolver->createOrder($args['items']);
+                            return $orderResolver->newOrder($args['items']);
                         },
                     ],
                 ],

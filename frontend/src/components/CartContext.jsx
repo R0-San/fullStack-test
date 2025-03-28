@@ -18,11 +18,6 @@ export const CartProvider = ({ children }) => {
     }
   }, []);
 
-  const handleAddToCart = (e) => {
-    e.stopPropagation();
-    addToCart(product, selectedAttributes);
-  };
-
   const generateItemKey = (id, selectedAttributes) => {
     return `${id}-${Object.entries(selectedAttributes)
       .map(([key, value]) => `${key}-${value}`)

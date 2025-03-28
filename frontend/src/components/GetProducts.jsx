@@ -8,12 +8,6 @@ function GetProducts({ addToCart }) {
   const { category } = useParams();
   const { error, loading, data } = useQuery(Load_Products);
 
-  useEffect(() => {
-    if (data) {
-      console.log(data);
-    }
-  }, [data]);
-
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
