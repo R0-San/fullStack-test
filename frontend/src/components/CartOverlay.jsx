@@ -50,8 +50,10 @@ function CartOverlay({ isVisible, onClose}) {
                                   backgroundColor: itemOption.value,
                                   border:
                                     item.selectedAttributes[attribute.id] === itemOption.value
-                                      ? "3px solid green"
+                                      ? "2px solid green"
                                       : "1px solid #000",
+                                      width: "30px",
+                                      height: "30px",
                                 }
                                 : {}
                             }

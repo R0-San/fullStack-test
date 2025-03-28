@@ -21,6 +21,7 @@
   right: 100px;
   padding: 20px;
   max-width: 1000px;
+  min-width: 450px;
   margin: 50px auto;
   padding-top: 100px;
   position: absolute;
@@ -60,20 +61,13 @@
   margin-top: 10px;
 }
 
-.attribute-buttons {
-  display: flex;
-  gap: 10px;
-  margin-top: 5px;
-}
-
 .attribute-btn {
-  min-width: 40px;
-  padding: 5px 10px;
-  font-size: 0.9rem;
+  padding: 8px;
+  font-size: 16px;
   border: 2px solid #000;
   background-color: white;
-  cursor: pointer;
-  transition: 0.3s;
+  justify-content: center;
+  align-items: center;
 }
 
 .attribute-btn:hover {
@@ -88,19 +82,19 @@
 .cart-item-quantity-controls {
   position: absolute;
   top: 50%;
-  right: 180px;  
+  right: 45%; 
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
   z-index: 2;
 }
 
 .cart-item-plus-btn {
-  width: 40px;
-  height: 40px;
-  font-size: 1.2rem;
+  width: 35px;
+  height: 35px;
+  font-size: 24px;
   font-weight: bold;
   background: white;
   border: 2px solid black;
@@ -112,9 +106,9 @@
 }
 
 .cart-item-minus-btn {
-  width: 40px;
-  height: 40px;
-  font-size: 1.2rem;
+  width: 35px;
+  height: 35px;
+  font-size: 24px;
   font-weight: bold;
   background: white;
   border: 2px solid black;
@@ -142,6 +136,7 @@
   object-fit: cover;
   margin-top: 40px;
   margin-bottom: 40px; 
+  margin-left: 20%
 }
 
 .place-order-btn {
@@ -180,4 +175,21 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+@media (max-width: 768px) {
+  .cart-item-quantity-controls {
+    right: 5%;
+  }
+
+  .cart-item-plus-btn,
+  .cart-item-minus-btn {
+    width: 35px; 
+    height: 35px;
+    font-size: 1rem;
+  }
+
+  .cart-item-quantity {
+    font-size: 1rem;
+  }
 }

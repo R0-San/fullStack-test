@@ -90,7 +90,7 @@ function ProductDetailsPage() {
                                 {attribute.items.map((item) => (
                                     <button
                                         key={item.id}
-                                        className={`attribute-btn ${selectedAttributes[attribute.id] === item.value ? 'selected' : ''}`}
+                                        className={`attribute-btns ${selectedAttributes[attribute.id] === item.value ? 'selected' : ''}`}
                                         onClick={() => handleAttributeSelect(attribute.id, item.value)}
                                         style={
                                             attribute.name.toLowerCase() === "color"
