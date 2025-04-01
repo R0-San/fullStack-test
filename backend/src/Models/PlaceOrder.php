@@ -4,30 +4,24 @@ namespace App\Models;
 
 class PlaceOrder
 {
-    private $conn;
 
-    public function __construct($conn)
-    {
-        $this->conn = $conn;
-    }
-
-    public function createOrder($items)
+    public function createOrder($items,$conn)
     {
         $totalAmount = 0;
 
         foreach ($items as $item) {
             $productId = $item['productId'];
             $quantity = $item['quantity'];
-            $price = $this->getProductPriceById($productId);
+            $price = $this->getProductPriceById($productId,$conn);
             $totalAmount += $price * $quantity;
         }
 
-        $orderId = $this->insertOrder($totalAmount);
+        $orderId = $this->insertOrder($totalAmount,$conn);
 
         foreach ($items as $item) {
-            $orderItemId = $this->insertOrderItem($orderId, $item['productId'], $item['quantity']);
+            $orderItemId = $this->insertOrderItem($orderId, $item['productId'], $item['quantity'],$conn);
             foreach ($item['selectedAttributes'] as $attribute) {
-                $this->insertOrderItemAttribute($orderItemId, $attribute['attributeId'], $attribute['value']);
+                $this->insertOrderItemAttribute($orderItemId, $attribute['attributeId'], $attribute['value'],$conn);
             }
         }
 
@@ -51,9 +45,9 @@ class PlaceOrder
         ];
     }
 
-    private function getProductPriceById($productId)
+    private function getProductPriceById($productId,$conn)
     {
-        $stmt = $this->conn->prepare("SELECT amount FROM prices WHERE id = (SELECT prices FROM products WHERE id = ?)");
+        $stmt = $conn->prepare("SELECT amount FROM prices WHERE id = (SELECT prices FROM products WHERE id = ?)");
         $stmt->bind_param("i", $productId);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -61,27 +55,27 @@ class PlaceOrder
         return $row ? (float) $row['amount'] : 0;
     }
 
-    private function insertOrder($totalAmount)
+    private function insertOrder($totalAmount, $conn)
     {
-        $stmt = $this->conn->prepare("INSERT INTO orders (total_amount, status, created_at) VALUES (?, 'Pending', NOW())");
+        $stmt = $conn->prepare("INSERT INTO orders (total_amount, status, created_at) VALUES (?, 'Pending', NOW())");
         $stmt->bind_param("d", $totalAmount);
         if (!$stmt->execute()) {
             throw new \Exception("Failed to insert order: " . $stmt->error);
         }
-        return $this->conn->insert_id;
+        return $conn->insert_id;
     }
 
-    private function insertOrderItem($orderId, $productId, $quantity)
+    private function insertOrderItem($orderId, $productId, $quantity, $conn)
     {
-        $stmt = $this->conn->prepare("INSERT INTO order_items (order_id, product_id, quantity) VALUES (?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO order_items (order_id, product_id, quantity) VALUES (?, ?, ?)");
         $stmt->bind_param("iii", $orderId, $productId, $quantity);
         $stmt->execute();
-        return $this->conn->insert_id;
+        return $conn->insert_id;
     }
 
-    private function insertOrderItemAttribute($orderItemId, $attributeId, $value)
+    private function insertOrderItemAttribute($orderItemId, $attributeId, $value, $conn)
     {
-        $stmt = $this->conn->prepare("INSERT INTO order_item_attributes (order_item_id, attribute_id, value) VALUES (?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO order_item_attributes (order_item_id, attribute_id, value) VALUES (?, ?, ?)");
         $stmt->bind_param("iis", $orderItemId, $attributeId, $value);
         $stmt->execute();
     }

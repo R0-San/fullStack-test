@@ -15,7 +15,6 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 use GraphQL\GraphQL as GraphQLBase;
-use GraphQL\Type\Definition\ListOfType;
 use GraphQL\Type\Definition\InputObjectType;
 use GraphQL\Type\Definition\ObjectType;
 use App\GraphQL\Resolvers\CategoryResolver;
@@ -31,8 +30,9 @@ use Throwable;
 
 class GraphQL
 {
-    static public function handle()
+    static public function handle(): void
     {
+
         global $conn;
 
         if ($conn->connect_error) {
@@ -41,13 +41,13 @@ class GraphQL
         }
 
         try {
-            $categoryResolver = new CategoryResolver($conn);
+            $categoryResolver = new CategoryResolver();
             $galleryResolver = new GalleryResolver();
             $itemResolver = new ItemResolver();
             $priceResolver = new PriceResolver();
             $attributeResolver = new AttributeResolver();
             $productResolver = new ProductsResolver();
-            $orderResolver = new OrderResolver($conn);
+            $orderResolver = new OrderResolver();
 
             $categoryType = new ObjectType([
                 'name' => 'Category',
@@ -330,8 +330,8 @@ class GraphQL
                                 ])),
                             ],
                         ],
-                        'resolve' => function ($root, $args) use ($orderResolver) {
-                            return $orderResolver->newOrder($args['items']);
+                        'resolve' => function ($root, $args) use ($orderResolver, $conn) {
+                            return $orderResolver->newOrder($args['items'], $conn);
                         },
                     ],
                 ],

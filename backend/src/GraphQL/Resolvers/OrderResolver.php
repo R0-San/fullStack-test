@@ -4,8 +4,8 @@ use App\Models\PlaceOrder;
 
 class OrderResolver extends PlaceOrder
 {
-    public function newOrder($items)
+    public function newOrder($items, $conn)
     {
-        return $this->createOrder($items);
+        return $this->createOrder($items, $conn);
     }
 }

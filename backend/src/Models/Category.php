@@ -6,11 +6,6 @@ abstract class Category {
     public $category_id;
     public $category_name;
     public $products = [];
-    protected $conn;
-
-    public function __construct($conn) {
-        $this->conn = $conn;
-    }
 
     public function set_category_id($category_id) {
         $this->category_id = $category_id;
